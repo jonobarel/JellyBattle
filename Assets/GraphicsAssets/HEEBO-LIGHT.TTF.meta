@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: fe5bfc8a8f1f0784c947026db9e30399
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Heebo
+  fontNames:
+  - Heebo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 7501f7757787008458a3de837e6cf263, type: 3}
+  - {fileID: 12800000, guid: a2e9fd17d604bf64a897885c7d76ea45, type: 3}
+  - {fileID: 12800000, guid: 75a643971fb5bf247805d4d7ac65320d, type: 3}
+  - {fileID: 12800000, guid: 023d2ac7ccd7d034dac8fdac9faf4158, type: 3}
+  - {fileID: 12800000, guid: 595b5d3d6dc0ab5439b31913b90ec4f9, type: 3}
+  - {fileID: 12800000, guid: 205e2a3f23d718b4491a8253afb34ec1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
