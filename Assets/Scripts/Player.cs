@@ -102,6 +102,11 @@ public class Player : ColorFightersBase
         particleGun.SetParticleSpeed(config.BulletSpeed);
         if (config.ShowDebugData) {
             debugText.gameObject.SetActive(true);
+            if (name == "Player1"){
+                debugText.textPosition = TextAnchor.MiddleLeft;
+            } else {
+                debugText.textPosition = TextAnchor.MiddleRight;
+            }
         }
         
         //particleGun.GetComponent<ParticleSystem>().main.startSpeed = config.BulletSpeed;

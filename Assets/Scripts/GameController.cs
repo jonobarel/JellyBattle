@@ -61,6 +61,7 @@ public class GameController : MonoBehaviour
         p.GetComponent<PlayerInput>().SwitchCurrentControlScheme(name);
         p.GetComponent<PlayerInput>().DeactivateInput();
         players.Add(p);
+        
     }
     //public void StartMatch() {
     //    players.ForEach(delegate (Player p) {
