@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 589931175272594874, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_Name
-      value: EntityBase
+      value: BulletFromEntity
       objectReference: {fileID: 0}
     - target: {fileID: 589931175272594877, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
@@ -66,6 +66,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931835387593832445, guid: 268c86ef8a64cf148abf623950b9595c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 268c86ef8a64cf148abf623950b9595c, type: 3}
