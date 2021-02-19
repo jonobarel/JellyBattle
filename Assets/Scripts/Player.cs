@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : ColorFightersBase
+public class Player : Entity
 {
     public const int FaceLeft = -1;
     public const int FaceRight = 1;
@@ -170,6 +170,7 @@ public class Player : ColorFightersBase
         {
             Debug.Log(name + " touched powerup");
             game.PowerUpTaken();
+            particleGun.isPoweredUp = true;
         }
     }
 
@@ -189,7 +190,7 @@ public class Player : ColorFightersBase
         {
             //Debug.Log(name + "shot self");
         }
-        else if (!isDefending)
+        else if (!isDefending || shooter.isPoweredUp)
         {
             Debug.Log(shooter.Owner.name + "==>" + name);
             game.PlayerHit(self, shooter);
