@@ -5254,7 +5254,8 @@ PrefabInstance:
       propertyPath: defenseShield
       value: 
       objectReference: {fileID: 6184108430453570968}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1497169000650897364, guid: 268c86ef8a64cf148abf623950b9595c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 268c86ef8a64cf148abf623950b9595c, type: 3}
 --- !u!1 &2474977231376048546 stripped
 GameObject:

@@ -14,16 +14,16 @@ public class Shot : Entity
 
     public override void Awake()
     {
-        Debug.Log(name+" initialised");
         base.Awake();
         particleSystem = GetComponent<ParticleSystem>();
         gunParticles = particleSystem.main;
     }
 
-    private void OnCollisionEnter(GameObject other)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(name + " collided with " + other.name);
-        if (other.CompareTag("Player") && other.GetComponent<Player>() != Owner)
+        GameObject collider = other.gameObject;
+        Debug.Log(name + " collided with " + collider.name);
+        if (collider.CompareTag("Player") && collider.GetComponent<Player>() != Owner)
         {
             isPoweredUp = false;
         }

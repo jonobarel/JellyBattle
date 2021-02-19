@@ -22,12 +22,6 @@ public class ShotController : ColorFightersBase
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Fire() {
         Shot new_shot;
         if (magazine.Count == 0) {
