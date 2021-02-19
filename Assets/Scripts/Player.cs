@@ -24,7 +24,7 @@ public class Player : ColorFightersBase
     private Light playerLight;
     [SerializeField] private Shooter particleGun;
     [SerializeField] private ParticleSystem.MainModule gunParticles;
-    [SerializeField] private DebugText debugText;    
+    [SerializeField] private DebugText debugText;
 
     private Animator animator;
     private PlayerInput input;
@@ -48,7 +48,7 @@ public class Player : ColorFightersBase
     }
 
     private float nextShotWindow = 0f;
-    
+
 
     public Color playerColor
     {
@@ -61,7 +61,8 @@ public class Player : ColorFightersBase
 
     private bool isPoweredUp = false;
 
-    void Awake() {
+    void Awake()
+    {
         playerRenderer = GetComponentInChildren<Renderer>();
         playerLight = GetComponent<Light>();
         particleGun = GetComponentInChildren<Shooter>();
@@ -71,14 +72,16 @@ public class Player : ColorFightersBase
         input = GetComponent<PlayerInput>();
 
     }
-    void Start() {
+    void Start()
+    {
         InitConfigVars(game.config);
         rigidBody = GetComponent<Rigidbody>();
-        
-        Debug.Log(name +" initiated.");
+
+        Debug.Log(name + " initiated.");
     }
 
-    public void FixedUpdate() {
+    public void FixedUpdate()
+    {
         debugText.force = movementX;
         debugText.velocity = rigidBody.velocity.x;
 
@@ -86,91 +89,114 @@ public class Player : ColorFightersBase
 
 
         Vector3 new_vel = rigidBody.velocity;
-        new_vel.x = Mathf.Clamp(new_vel.x, -maxSpeed, maxSpeed);        
-        
+        new_vel.x = Mathf.Clamp(new_vel.x, -maxSpeed, maxSpeed);
+
         rigidBody.velocity = new_vel;
 
         SetFacing(lastDirectionFacing); //adjust the direction of the particle cannon based on last movement
     }
 
-    private void InitConfigVars(GameConfig config) {
+    private void InitConfigVars(GameConfig config)
+    {
         jumpForce = config.PlayerJumpForce;
         gravityMultiplier = config.GravityMultiplier;
         moveSpeed = config.PlayerMaxSpeed;
         shotCooldown = config.ShotCooldown;
         maxSpeed = config.PlayerMaxSpeed;
         particleGun.SetParticleSpeed(config.BulletSpeed);
-        if (config.ShowDebugData) {
+        if (config.ShowDebugData)
+        {
             debugText.gameObject.SetActive(true);
-            if (name == "Player1"){
+            if (name == "Player1")
+            {
                 debugText.textPosition = TextAnchor.MiddleLeft;
-            } else {
+            }
+            else
+            {
                 debugText.textPosition = TextAnchor.MiddleRight;
             }
         }
-        
+
         //particleGun.GetComponent<ParticleSystem>().main.startSpeed = config.BulletSpeed;
     }
-    public void OnJump(InputValue jumpValue) {
-        if (isGrounded) {
+    public void OnJump(InputValue jumpValue)
+    {
+        if (isGrounded)
+        {
             rigidBody.AddForce(Vector3.up * jumpForce / gravityMultiplier, ForceMode.VelocityChange);
             isGrounded = false;
 
         }
     }
 
-    public void OnMove(InputValue movementValue) {
+    public void OnMove(InputValue movementValue)
+    {
         Vector2 movementVector = movementValue.Get<Vector2>();
 
         //Debug.Log(name + ": movement vector " + movementVector);
-        if (isDefending) {
+        if (isDefending)
+        {
             movementVector = Vector2.zero;
         }
-        
+
         movementX = movementVector.x;
 
         // record the last non-zero horizontal movement for the particle cannon.
-        if (movementVector.x != 0) {
+        if (movementVector.x != 0)
+        {
             lastDirectionFacing = movementVector.x;
 
         }
     }
 
-    public void OnCollisionEnter(Collision other) {
-        if (other.gameObject.CompareTag("Void")) {
+    public void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Void"))
+        {
             Die();
         }
-        else if (other.gameObject.CompareTag("Platform")) {
+        else if (other.gameObject.CompareTag("Platform"))
+        {
             isGrounded = true;
 
             //maintain  horizontal velocity when hitting a platform to keep movement smooth
             rigidBody.velocity = new Vector3(-other.relativeVelocity.x, 0, 0);
         }
+    }
 
-        if (other.gameObject.CompareTag("Powerup")) {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Powerup"))
+        {
             Debug.Log(name + " touched powerup");
             game.PowerUpTaken();
         }
-
     }
 
-    public void SetPlayerColor(Color color) {
+    public void SetPlayerColor(Color color)
+    {
         playerRenderer.material.SetColor("_Color", color);
         playerRenderer.material.SetColor("_EmissionColor", color);
         playerLight.color = color;
         gunParticles.startColor = color;
     }
 
-    private void OnParticleCollision(GameObject other) {
+    private void OnParticleCollision(GameObject other)
+    {
         Shooter shooter = other.GetComponent<Shooter>();
 
-        if (shooter.Owner == self) {
+        if (shooter.Owner == self)
+        {
             //Debug.Log(name + "shot self");
-        } else if (!isDefending) {
+        }
+        else if (!isDefending)
+        {
             Debug.Log(shooter.Owner.name + "==>" + name);
             game.PlayerHit(self, shooter);
             Die();
-        } else {
+        }
+        else
+        {
             Debug.Log(name + " blocked!");
         }
 
@@ -181,13 +207,16 @@ public class Player : ColorFightersBase
     /// Used in game startup and during FixedUpdate
     /// </summary>
     /// <param name="facingDirection">use PlayerController.FaceLeft or PlayerController.FaceRight</param>
-    public void SetFacing(float facingDirection) {
+    public void SetFacing(float facingDirection)
+    {
         Vector3 new_facing = new Vector3(facingDirection, 0f, 0f).normalized;
         particleGun.transform.rotation = Quaternion.LookRotation(new_facing, Vector3.up);
 
     }
-    public void OnShoot() {
-        if (!isDefending && Time.time > nextShotWindow) {
+    public void OnShoot()
+    {
+        if (!isDefending && Time.time > nextShotWindow)
+        {
             //this COULD be moved to the particle cannon, I suppose?
             particleGun.Shoot();
             nextShotWindow = Time.time + shotCooldown;
@@ -195,13 +224,16 @@ public class Player : ColorFightersBase
 
     }
 
-    public void OnDefend(InputValue input) {
+    public void OnDefend(InputValue input)
+    {
         if (!input.isPressed) //isDefending is redundant, because of how keys work. But just in case. 
         { //stop defending
             Debug.Log(name + ": Stop defending");
             rigidBody.constraints ^= RigidbodyConstraints.FreezePositionX; //unlock horizontal position.
             isDefending = false;
-        } else if (input.isPressed) {
+        }
+        else if (input.isPressed)
+        {
             //enter defense mode
             isDefending = true;
             Debug.Log(name + ": Defending");
@@ -209,17 +241,20 @@ public class Player : ColorFightersBase
         }
         animator.SetBool("Defending", isDefending);
     }
-    private void PlayerDefend() {
+    private void PlayerDefend()
+    {
         //TODO: implement me
         //transform.GetChild(3).gameObject.SetActive(true);
     }
 
-    private void PlayerStopDefending() {
+    private void PlayerStopDefending()
+    {
         //TODO: implement me.
         //transform.GetChild(3).gameObject.SetActive(false);
     }
 
-    private void Die() {
+    private void Die()
+    {
 
         isDead = true;
 

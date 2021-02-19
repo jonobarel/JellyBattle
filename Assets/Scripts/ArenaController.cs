@@ -25,22 +25,7 @@ public class ArenaController : ColorFightersBase
     // Update is called once per frame
     void FixedUpdate()
     {
-        /*if (!isPowerUpActive)
-        {
-            float timeSinceSpawn = Time.time - lastPickupTime;
-            float probFactor = timeSinceSpawn / powerUpSpawnInterval;
-            Debug.Log("Arena probabilty factor: "+probFactor);
-            if (probFactor > 1)
-            {
-                Debug.Log("spawn hasn't occurred for too long");
-            }
-
-            if (Random.Range(0f, 1f) < probFactor * probFactor)
-            {
-                SpawnPowerup();
-            }
-        }*/
-        Debug.Log("time since powerup spawn: " + (Time.time - lastPickupTime));
+        Debug.Log("time since powerup spawn: " + Mathf.Round(Time.time - lastPickupTime));
         if(!isPowerUpActive) {
             float t = Time.time - lastPickupTime;
             if (t > powerUpSpawnInterval) {

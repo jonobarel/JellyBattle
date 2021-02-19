@@ -4564,6 +4564,61 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arena
       objectReference: {fileID: 0}
+    - target: {fileID: 657394806392187467, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938445661251719785, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4071945487400873282, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581267358092613849, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581267358092613849, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581267358092613849, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405429776338519077, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886456787562333415, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886456787562333415, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018010716645207325, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158947604357709692, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8894569934544335244, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
         type: 3}
       propertyPath: game
