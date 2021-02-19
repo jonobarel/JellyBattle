@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,6 +21,7 @@ public class MenuMatch : MenuBase
         });
     }
     public void StartMatch() {
+        UnityEngine.Random.InitState((int)(Time.time*1000));
         players = game.players;
         players.ForEach(delegate (Player p) {
             p.GetComponent<PlayerInput>().ActivateInput();

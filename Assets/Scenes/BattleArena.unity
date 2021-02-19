@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2daa29c87a7dd0a4eb5fce47f252cccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
   game: {fileID: 0}
   players: []
 --- !u!225 &53338481
@@ -2661,9 +2660,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2daa29c87a7dd0a4eb5fce47f252cccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
   game: {fileID: 0}
   players: []
+--- !u!114 &1073680904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8894569934544335244, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+    type: 3}
+  m_PrefabInstance: {fileID: 467346281125461269}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef2a64ed26d93d4984772bc1312cf08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1159731539
 GameObject:
   m_ObjectHideFlags: 0
@@ -4338,6 +4348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameCamera: {fileID: 963194229}
   players: []
+  arena: {fileID: 1073680904}
   config: {fileID: 11400000, guid: ef1baf1dab9c86d48bd2abd3c4e6d369, type: 2}
   playerPrefab: {fileID: 1806595039067116119, guid: 7e649a7503645e547a18c93ac0154e92,
     type: 3}
@@ -4355,7 +4366,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2128811244
 GameObject:
@@ -4496,7 +4507,7 @@ PrefabInstance:
     - target: {fileID: 467346280649859358, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 467346280649859358, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
         type: 3}
@@ -4553,6 +4564,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arena
       objectReference: {fileID: 0}
+    - target: {fileID: 8894569934544335244, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 2051351378}
+    - target: {fileID: 8894569934544335244, guid: d4dda01f8a3cf4c49b6ca805a2ee9758,
+        type: 3}
+      propertyPath: powerUpPrefab
+      value: 
+      objectReference: {fileID: 4014282702501391925, guid: 75df2d374a18872409b7a82c6c0961e9,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4dda01f8a3cf4c49b6ca805a2ee9758, type: 3}
 --- !u!222 &917037621540464914
@@ -4887,7 +4909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abfcf6a06c626674ba971fd221b2155a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: ef1baf1dab9c86d48bd2abd3c4e6d369, type: 2}
   game: {fileID: 2051351378}
   players: []
 --- !u!114 &2409210980418585968

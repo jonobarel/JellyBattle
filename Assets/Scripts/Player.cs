@@ -13,6 +13,7 @@ public class Player : ColorFightersBase
     [SerializeField] private float maxSpeed;
     [SerializeField] private GameObject defenseShield;
     [SerializeField] private ParticleSystem powerup;
+    private RigidbodyConstraints defaultConstraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
 
     private float shotCooldown;
 
@@ -32,6 +33,7 @@ public class Player : ColorFightersBase
     private bool isGrounded = false;
 
     private float movementX = 0;
+    private float lastDirectionFacing = 1;
     private bool isDefending = false;
 
     public bool IsDefending
@@ -80,10 +82,6 @@ public class Player : ColorFightersBase
         debugText.force = movementX;
         debugText.velocity = rigidBody.velocity.x;
 
-        if (Time.time > nextShotWindow) {
-            //Debug.Log(name + ": Shot ready");
-        }
-        SetFacing(movementX); //adjust the direction of the particle cannon based on last movement
         rigidBody.AddForce(new Vector3(movementX * moveSpeed, 0f, 0f));
 
 
@@ -91,6 +89,8 @@ public class Player : ColorFightersBase
         new_vel.x = Mathf.Clamp(new_vel.x, -maxSpeed, maxSpeed);        
         
         rigidBody.velocity = new_vel;
+
+        SetFacing(lastDirectionFacing); //adjust the direction of the particle cannon based on last movement
     }
 
     private void InitConfigVars(GameConfig config) {
@@ -126,17 +126,12 @@ public class Player : ColorFightersBase
         if (isDefending) {
             movementVector = Vector2.zero;
         }
-        if (movementVector.x == 0) {
-            rigidBody.velocity = Vector3.zero;
-        } else {
-            movementX = movementVector.x;
-            //rigidBody.velocity = new Vector3(movementVector.x * moveSpeed, rigidBody.velocity.y, 0);
-        }
+        
+        movementX = movementVector.x;
 
         // record the last non-zero horizontal movement for the particle cannon.
-
         if (movementVector.x != 0) {
-            movementX = movementVector.x;
+            lastDirectionFacing = movementVector.x;
 
         }
     }
@@ -145,7 +140,7 @@ public class Player : ColorFightersBase
         if (other.gameObject.CompareTag("Void")) {
             Die();
         }
-        if (other.gameObject.CompareTag("Platform")) {
+        else if (other.gameObject.CompareTag("Platform")) {
             isGrounded = true;
 
             //maintain  horizontal velocity when hitting a platform to keep movement smooth
@@ -153,7 +148,7 @@ public class Player : ColorFightersBase
         }
 
         if (other.gameObject.CompareTag("Powerup")) {
-
+            game.PowerUpTaken();
         }
 
     }
@@ -186,7 +181,7 @@ public class Player : ColorFightersBase
     /// </summary>
     /// <param name="facingDirection">use PlayerController.FaceLeft or PlayerController.FaceRight</param>
     public void SetFacing(float facingDirection) {
-        Vector3 new_facing = new Vector3(facingDirection, 0f, 0f);
+        Vector3 new_facing = new Vector3(facingDirection, 0f, 0f).normalized;
         particleGun.transform.rotation = Quaternion.LookRotation(new_facing, Vector3.up);
 
     }
@@ -200,16 +195,16 @@ public class Player : ColorFightersBase
     }
 
     public void OnDefend(InputValue input) {
-        if (!input.isPressed && isDefending) //isDefending is redundant, because of how keys work. But just in case. 
+        if (!input.isPressed) //isDefending is redundant, because of how keys work. But just in case. 
         { //stop defending
             Debug.Log(name + ": Stop defending");
-            rigidBody.constraints = RigidbodyConstraints.None;
+            rigidBody.constraints ^= RigidbodyConstraints.FreezePositionX; //unlock horizontal position.
             isDefending = false;
         } else if (input.isPressed) {
             //enter defense mode
             isDefending = true;
             Debug.Log(name + ": Defending");
-            rigidBody.constraints = RigidbodyConstraints.FreezePositionX;
+            rigidBody.constraints |= RigidbodyConstraints.FreezePositionX; //lock horizontal position
         }
         animator.SetBool("Defending", isDefending);
     }

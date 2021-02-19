@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public MultipleTargetCamera gameCamera;
     public List<Player> players;
     protected GameController gameController;
+    public ArenaController arena;
 
     [Header("General Settings")]
     public GameConfig config;
@@ -69,6 +70,9 @@ public class GameController : MonoBehaviour
     //    });
     //}
 
+    public void PowerUpTaken() {
+        arena.PowerUpTaken();
+    }
     public void PlayerHit(Player target, Shooter shooter) {
 
     }
