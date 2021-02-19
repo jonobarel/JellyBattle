@@ -23,5 +23,5 @@ MonoBehaviour:
   deathColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
   PowerupShotSpeedMultiplier: 3
   PowerupSizeMultiplier: 1.5
-  PowerupSpawnInterval: 10
+  PowerupSpawnInterval: 5
   ShowDebugData: 0

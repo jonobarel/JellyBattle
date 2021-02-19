@@ -148,6 +148,7 @@ public class Player : ColorFightersBase
         }
 
         if (other.gameObject.CompareTag("Powerup")) {
+            Debug.Log(name + " touched powerup");
             game.PowerUpTaken();
         }
 
