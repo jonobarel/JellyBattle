@@ -11,13 +11,14 @@ public class ShotController : ColorFightersBase
     public bool isPoweredUp;
     private Player shooter;
     private int shotCounter = 0;
-    [SerializeField] private float defaultShotElevation = 0.5f;
+    [SerializeField] private float shotElevation = 0.5f;
     void Start()
     {
         shooter = GetComponentInParent<Player>();
         game = shooter.game;
         shotCooldown = game.config.ShotCooldown;
         shotSpeed = game.config.BulletSpeed;
+        shotElevation = game.config.ShotElevation;
         magazine = new Stack<Shot>(4);
 
     }
@@ -39,7 +40,7 @@ public class ShotController : ColorFightersBase
         new_shot.transform.position = gameObject.transform.position;
 
         Vector3 firing_dir = shooter.LastFacingDirVector();
-        firing_dir.y+=defaultShotElevation;
+        firing_dir.y+=shotElevation;
         new_shot.gameObject.SetActive(true);
         new_shot.GetComponent<Rigidbody>().AddForce(firing_dir*shotSpeed, ForceMode.VelocityChange);
     }
