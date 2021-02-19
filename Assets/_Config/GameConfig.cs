@@ -26,5 +26,6 @@ public class GameConfig : ScriptableObject
     public float PowerupSpawnInterval = 10;
 
     [Header("Developer options")]
-    public bool ShowDebugData;
+    public bool DebugMode;
+
 }

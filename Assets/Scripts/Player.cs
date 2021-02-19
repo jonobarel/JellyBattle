@@ -14,22 +14,20 @@ public class Player : Entity
     [SerializeField] private GameObject defenseShield;
     [SerializeField] private ParticleSystem powerup;
     private RigidbodyConstraints defaultConstraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
-
+    
     private float shotCooldown;
 
     //member objects
-    private Renderer playerRenderer;
     private Rigidbody rigidBody;
 
     //private Light playerLight;
-    [SerializeField] private Shooter particleGun;
+    [SerializeField] private ShotController particleGun;
     [SerializeField] private ParticleSystem.MainModule gunParticles;
     [SerializeField] private DebugText debugText;
 
     private Animator animator;
     private PlayerInput input;
 
-    new private Player entity;
     private bool isGrounded = false;
 
     private float movementX = 0;
@@ -54,18 +52,13 @@ public class Player : Entity
     }
 
     private float nextShotWindow = 0f;
-
-
-
     private bool isPoweredUp = false;
 
     public override void Awake()
     {
         base.Awake();
-        playerRenderer = GetComponentInChildren<Renderer>();
-
-        particleGun = GetComponentInChildren<Shooter>();
-        gunParticles = particleGun.GetComponent<ParticleSystem>().main;
+        particleGun = GetComponentInChildren<ShotController>();
+        //gunParticles = particleGun.GetComponent<ParticleSystem>().main;
         animator = GetComponent<Animator>();
         entity = GetComponent<Player>();
         input = GetComponent<PlayerInput>();
@@ -79,6 +72,9 @@ public class Player : Entity
         Debug.Log(name + " initiated.");
     }
 
+    public Vector3 LastFacingDirVector() {
+        return new Vector3(lastDirectionFacing, 0, 0);
+    }
     public void FixedUpdate()
     {
         debugText.force = movementX;
@@ -102,8 +98,8 @@ public class Player : Entity
         moveSpeed = config.PlayerMaxSpeed;
         shotCooldown = config.ShotCooldown;
         maxSpeed = config.PlayerMaxSpeed;
-        particleGun.SetParticleSpeed(config.BulletSpeed);
-        if (config.ShowDebugData)
+        //particleGun.SetParticleSpeed(config.BulletSpeed);
+        if (config.DebugMode)
         {
             debugText.gameObject.SetActive(true);
             if (name == "Player1")
@@ -175,10 +171,10 @@ public class Player : Entity
 
     private void SetPlayerColor(Color color)
     {
-        gunParticles.startColor = color;
+        //gunParticles.startColor = color;
     }
 
-    private void OnParticleCollision(GameObject other)
+    /*private void OnParticleCollision(GameObject other)
     {
         Shooter shooter = other.GetComponent<Shooter>();
 
@@ -197,7 +193,7 @@ public class Player : Entity
             Debug.Log(name + " blocked!");
         }
 
-    }
+    }*/
 
     /// <summary>
     /// Sets the firing direction for the particle cannon.
@@ -215,7 +211,7 @@ public class Player : Entity
         if (!isDefending && Time.time > nextShotWindow)
         {
             //this COULD be moved to the particle cannon, I suppose?
-            particleGun.Shoot();
+            particleGun.Fire();
             nextShotWindow = Time.time + shotCooldown;
         }
 
