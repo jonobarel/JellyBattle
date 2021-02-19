@@ -7,9 +7,11 @@ using UnityEngine.InputSystem;
 public class Shot : Entity
 {
     public bool isPoweredUp;
-
+    public ShotController shotController;
     new private ParticleSystem particleSystem;
     private ParticleSystem.MainModule gunParticles;
+    public Rigidbody rigidBody;
+    
     
 
     public override void Awake()
@@ -17,6 +19,7 @@ public class Shot : Entity
         base.Awake();
         particleSystem = GetComponent<ParticleSystem>();
         gunParticles = particleSystem.main;
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,6 +29,9 @@ public class Shot : Entity
         if (collider.CompareTag("Player") && collider.GetComponent<Player>() != Owner)
         {
             isPoweredUp = false;
+        } else if (collider.CompareTag("Void") || collider.CompareTag("Platform")) {
+            shotController.ReturnShot(gameObject.GetComponent<Shot>());
+
         }
     }
 }

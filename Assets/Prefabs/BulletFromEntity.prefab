@@ -109,32 +109,32 @@ PrefabInstance:
     - target: {fileID: 589931176292479405, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0
+      value: 0.0031822473
       objectReference: {fileID: 0}
     - target: {fileID: 589931176292479405, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0
+      value: -0.061489597
       objectReference: {fileID: 0}
     - target: {fileID: 589931176292479405, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: 0
+      value: -0.003079176
       objectReference: {fileID: 0}
     - target: {fileID: 589931176292479405, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.15000004
+      value: 0.13754374
       objectReference: {fileID: 0}
     - target: {fileID: 589931176292479405, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.15
+      value: 0.17285141
       objectReference: {fileID: 0}
     - target: {fileID: 589931176292479405, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.15000004
+      value: 0.15033688
       objectReference: {fileID: 0}
     - target: {fileID: 2931835387593832445, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
@@ -144,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 7560202747062963490, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560202747062963490, guid: 268c86ef8a64cf148abf623950b9595c,
         type: 3}
