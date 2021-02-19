@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : ColorFightersBase
+public class Player : Entity
 {
     public const int FaceLeft = -1;
     public const int FaceRight = 1;
@@ -21,7 +21,7 @@ public class Player : ColorFightersBase
     private Renderer playerRenderer;
     private Rigidbody rigidBody;
 
-    private Light playerLight;
+    //private Light playerLight;
     [SerializeField] private Shooter particleGun;
     [SerializeField] private ParticleSystem.MainModule gunParticles;
     [SerializeField] private DebugText debugText;
@@ -29,7 +29,7 @@ public class Player : ColorFightersBase
     private Animator animator;
     private PlayerInput input;
 
-    private Player self;
+    new private Player entity;
     private bool isGrounded = false;
 
     private float movementX = 0;
@@ -47,28 +47,27 @@ public class Player : ColorFightersBase
         get { return isDead; }
     }
 
+    public Color playerColor {
+        get { return entityColor;}
+        set {entityColor = value; SetPlayerColor(value);}
+
+    }
+
     private float nextShotWindow = 0f;
 
 
-    public Color playerColor
-    {
-        get { return playerRenderer.material.color; }
-        set
-        {
-            SetPlayerColor(value);
-        }
-    }
 
     private bool isPoweredUp = false;
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         playerRenderer = GetComponentInChildren<Renderer>();
-        playerLight = GetComponent<Light>();
+
         particleGun = GetComponentInChildren<Shooter>();
         gunParticles = particleGun.GetComponent<ParticleSystem>().main;
         animator = GetComponent<Animator>();
-        self = GetComponent<Player>();
+        entity = GetComponent<Player>();
         input = GetComponent<PlayerInput>();
 
     }
@@ -170,14 +169,12 @@ public class Player : ColorFightersBase
         {
             Debug.Log(name + " touched powerup");
             game.PowerUpTaken();
+            particleGun.isPoweredUp = true;
         }
     }
 
-    public void SetPlayerColor(Color color)
+    private void SetPlayerColor(Color color)
     {
-        playerRenderer.material.SetColor("_Color", color);
-        playerRenderer.material.SetColor("_EmissionColor", color);
-        playerLight.color = color;
         gunParticles.startColor = color;
     }
 
@@ -185,14 +182,14 @@ public class Player : ColorFightersBase
     {
         Shooter shooter = other.GetComponent<Shooter>();
 
-        if (shooter.Owner == self)
+        if (shooter.Owner == entity)
         {
             //Debug.Log(name + "shot self");
         }
-        else if (!isDefending)
+        else if (!isDefending || shooter.isPoweredUp)
         {
             Debug.Log(shooter.Owner.name + "==>" + name);
-            game.PlayerHit(self, shooter);
+            game.PlayerHit(entity, shooter);
             Die();
         }
         else
@@ -257,9 +254,8 @@ public class Player : ColorFightersBase
     {
 
         isDead = true;
-
-        playerColor = new Color(0.2f, 0.2f, 0.2f, 0.6f);
-        playerLight.enabled = false;
+        entityColor = new Color(0.2f, 0.2f, 0.2f, 0.6f);
+        bodyLight.enabled = false;
 
         input.enabled = false;
         rigidBody.constraints = RigidbodyConstraints.FreezeAll;

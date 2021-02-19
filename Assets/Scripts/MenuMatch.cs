@@ -16,7 +16,7 @@ public class MenuMatch : MenuBase
 
         players.ForEach(delegate (Player p) {
             if (playerName == p.name) {
-                p.SetPlayerColor(color);
+                p.playerColor = color;
             }
         });
     }
