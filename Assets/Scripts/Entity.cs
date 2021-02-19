@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : ColorFightersBase
+public abstract class Entity : ColorFightersBase
 
 {
-        protected Entity entity;
-        protected Renderer bodyRenderer;
-        protected Light bodyLight;
-        protected ParticleSystem particleSys;
+    protected Entity entity;
+    protected Renderer bodyRenderer;
+    protected Light bodyLight;
+    protected ParticleSystem particleSys;
 
-        private void Start() {
-            entity = GetComponent<Entity>();
-            bodyRenderer = GetComponentInChildren<Renderer>();
-        }
+    public virtual void Awake()
+    {
+        bodyLight = GetComponent<Light>();
+        entity = GetComponent<Entity>();
+        bodyRenderer = GetComponentInChildren<Renderer>();
+        particleSys = GetComponentInChildren<ParticleSystem>();
+    }
 
-        
-    public Color Color
+    public Color entityColor
     {
         get { return bodyRenderer.material.color; }
         set
         {
-            SetEntityColor(value);
+            SetColor(value);
         }
     }
 
-    private void SetEntityColor(Color color)
+    private void SetColor(Color color)
     {
         bodyRenderer.material.SetColor("_Color", color);
         bodyRenderer.material.SetColor("_EmissionColor", color);

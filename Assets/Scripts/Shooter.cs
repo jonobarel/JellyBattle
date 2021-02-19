@@ -18,6 +18,7 @@ public class Shooter : ColorFightersBase
         get { return owner; }
     }
 
+
     void Awake()
     {
         particleSystem = GetComponent<ParticleSystem>();
