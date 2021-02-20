@@ -53,8 +53,8 @@ public class ShotController : ColorFightersBase
     }
     public void ReturnShot(Shot shot)
     {
-        shot.rigidBody.velocity = Vector3.zero;
         shot.gameObject.SetActive(false);
+        shot.rigidBody.velocity = Vector3.zero;
         magazine.Push(shot);
 
 
