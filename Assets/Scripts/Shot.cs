@@ -26,14 +26,12 @@ public class Shot : Entity
     private void OnTriggerEnter(Collider other)
     {
         GameObject collider = other.gameObject;
-        
         if (other.CompareTag("Player") && other.GetComponent<Player>() == Owner.GetComponent<Player>()) {
             return;
         }
         else {
             shotController.ReturnShot(GetComponent<Shot>());
         }
-        
     }
 
     public void Fire(Vector3 firing_dir, bool powered) {
