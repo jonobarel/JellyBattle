@@ -28,15 +28,27 @@ public class Shot : Entity
         GameObject collider = other.gameObject;
         
         if (other.CompareTag("Player") && other.GetComponent<Player>() == Owner.GetComponent<Player>()) {
-            Debug.Log("bullet hit owner");
+            return;
         }
         else {
-            Debug.Log("Bullet hit: " + other.name);
             shotController.ReturnShot(GetComponent<Shot>());
         }
         
     }
 
+    public void Fire(Vector3 firing_dir, bool powered) {
+        float size_factor = BaseBulletSize*(powered ? game.config.PowerupSizeMultiplier : 1f);
+        float powereup_speed_factor = powered ?  game.config.PowerupShotSpeedMultiplier : 1f;
+
+        particleSys.Play();
+
+        isPoweredUp = powered;
+        firing_dir.x*=powereup_speed_factor;
+        transform.localScale = Vector3.one*size_factor;
+       
+        GetComponent<Rigidbody>().AddForce(firing_dir*game.config.BulletSpeed, ForceMode.VelocityChange);
+
+    }
     /// <summary>
     /// Initialise parameters for the Shot entity
     /// </summary>
@@ -52,14 +64,6 @@ public class Shot : Entity
         entityColor = col;
         shotController = gun;
     }
-    public void DoPowerUp() {
-        isPoweredUp = true;
-        transform.localScale=Vector3.one*BaseBulletSize*game.config.PowerupSizeMultiplier;
-    }
 
-    public void PowerDown() {
-        isPoweredUp = false;
-        transform.localScale=Vector3.one*BaseBulletSize;
-    }
 
 }

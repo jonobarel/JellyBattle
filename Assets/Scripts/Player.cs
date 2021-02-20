@@ -73,7 +73,7 @@ public class Player : Entity
         InitConfigVars(game.config);
         rigidBody = GetComponent<Rigidbody>();
 
-        Debug.Log(name + " initiated.");
+        //Debug.Log(name + " initiated.");
     }
 
     public Vector3 LastFacingDirVector()
@@ -166,12 +166,8 @@ public class Player : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bullet")){
-            Debug.Log(other.name + ": powered up " + other.GetComponent<Shot>().isPoweredUp);
-        }
         if (other.gameObject.CompareTag("Powerup"))
         {
-            Debug.Log(name + " touched powerup");
             game.PowerUpTaken();
             particleGun.isPoweredUp = true;
         }
