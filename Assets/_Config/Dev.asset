@@ -25,4 +25,4 @@ MonoBehaviour:
   PowerupShotSpeedMultiplier: 1.25
   PowerupSizeMultiplier: 2
   PowerupSpawnInterval: 5
-  DebugMode: 1
+  DebugMode: 0
