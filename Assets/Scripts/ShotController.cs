@@ -49,6 +49,7 @@ public class ShotController : ColorFightersBase
             }
 
         firing_dir.y+=shotElevation;
+        Debug.Log(shooter.name + " firing direction: " + firing_dir);
         new_shot.gameObject.SetActive(true);
         new_shot.GetComponent<Rigidbody>().AddForce(firing_dir*shotSpeed, ForceMode.VelocityChange);
     }

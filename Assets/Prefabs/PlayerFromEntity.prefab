@@ -163,7 +163,7 @@ MonoBehaviour:
   gravityMultiplier: 0
   moveSpeed: 0
   maxSpeed: 0
-  defenseShield: {fileID: 0}
+  defenseShield: {fileID: 6184108430453570968}
   powerup: {fileID: 0}
   particleGun: {fileID: 0}
   debugText: {fileID: 4514664781310765925}
@@ -213,7 +213,9 @@ MonoBehaviour:
   game: {fileID: 0}
   shotPrefab: {fileID: 4023756035860501594, guid: c3f5604c33b8db1498b8979e663a1ec5,
     type: 3}
+  shotSpeed: 0
   isPoweredUp: 0
+  shotElevation: 0.5
 --- !u!1 &4493031118487389067
 GameObject:
   m_ObjectHideFlags: 0

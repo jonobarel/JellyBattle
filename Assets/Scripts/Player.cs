@@ -14,11 +14,13 @@ public class Player : Entity
     [SerializeField] private GameObject defenseShield;
     [SerializeField] private ParticleSystem powerup;
     private RigidbodyConstraints defaultConstraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
-    
+
     private float shotCooldown;
 
     //member objects
     private Rigidbody rigidBody;
+    private static readonly int SieldInactiveLayer = 9;
+    private static readonly int DefaultLayer = 0;
 
     //private Light playerLight;
     [SerializeField] private ShotController particleGun;
@@ -45,9 +47,10 @@ public class Player : Entity
         get { return isDead; }
     }
 
-    public Color playerColor {
-        get { return entityColor;}
-        set {entityColor = value;}
+    public Color playerColor
+    {
+        get { return entityColor; }
+        set { entityColor = value; }
 
     }
 
@@ -72,7 +75,8 @@ public class Player : Entity
         Debug.Log(name + " initiated.");
     }
 
-    public Vector3 LastFacingDirVector() {
+    public Vector3 LastFacingDirVector()
+    {
         return new Vector3(lastDirectionFacing, 0, 0);
     }
     public void FixedUpdate()
@@ -168,10 +172,10 @@ public class Player : Entity
             particleGun.isPoweredUp = true;
         }
         else if (
-            other.gameObject.CompareTag("Bullet") 
-            && other.GetComponent<Shot>().Owner != entity 
-            && (!isDefending || other.GetComponent<Shot>().isPoweredUp)
-            ) {
+                other.gameObject.CompareTag("Bullet")
+                && other.GetComponent<Shot>().Owner != entity
+                && (!isDefending || other.GetComponent<Shot>().isPoweredUp))
+        {
             Die();
         }
     }
@@ -202,15 +206,15 @@ public class Player : Entity
     {
         if (!input.isPressed) //isDefending is redundant, because of how keys work. But just in case. 
         { //stop defending
-            Debug.Log(name + ": Stop defending");
+            defenseShield.layer = SieldInactiveLayer;
             rigidBody.constraints ^= RigidbodyConstraints.FreezePositionX; //unlock horizontal position.
             isDefending = false;
         }
         else if (input.isPressed)
         {
             //enter defense mode
+            defenseShield.layer = DefaultLayer;
             isDefending = true;
-            Debug.Log(name + ": Defending");
             rigidBody.constraints |= RigidbodyConstraints.FreezePositionX; //lock horizontal position
         }
         animator.SetBool("Defending", isDefending);

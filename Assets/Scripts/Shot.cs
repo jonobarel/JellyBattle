@@ -25,7 +25,7 @@ public class Shot : Entity
     private void OnTriggerEnter(Collider other)
     {
         GameObject collider = other.gameObject;
-        Debug.Log(name + " collided with " + collider.name);
+        Debug.Log(string.Format("{0} owned by {1} hit {2}", name,Owner, other.name ));
         if (other.CompareTag("Player") && other.GetComponent<Player>() == Owner) {
             return;
         }
@@ -51,11 +51,11 @@ public class Shot : Entity
     }
     public void DoPowerUp() {
         isPoweredUp = true;
-        transform.localScale=Vector3.one*game.config.PowerupSizeMultiplier;
+        transform.localScale*=game.config.PowerupSizeMultiplier;
     }
 
     public void DoUnpower() {
         isPoweredUp = false;
-        transform.localScale=Vector3.one;
+        transform.localScale/=game.config.PowerupSizeMultiplier;
     }
 }
