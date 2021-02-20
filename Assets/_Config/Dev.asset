@@ -22,7 +22,7 @@ MonoBehaviour:
   ShotCooldown: 1.5
   deathColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
   ShotElevation: 0.2
-  PowerupShotSpeedMultiplier: 1.25
-  PowerupSizeMultiplier: 2
+  PowerupShotSpeedMultiplier: 2
+  PowerupSizeMultiplier: 3
   PowerupSpawnInterval: 5
   DebugMode: 0
