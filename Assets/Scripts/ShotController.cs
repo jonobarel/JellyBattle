@@ -25,21 +25,29 @@ public class ShotController : ColorFightersBase
 
     public void Fire() {
         Shot new_shot;
-        if (magazine.Count == 0) {
+        if (magazine.Count == 0) { //out of bullets, need to create a new one.
             new_shot = Instantiate(shotPrefab);
-            new_shot.Owner = shooter;
-            new_shot.name = string.Format("P{0}-Shot{1}", shooter.name.Replace("layer",""), shotCounter++);
-            new_shot.game = game;
-            new_shot.entityColor = shooter.entityColor;
-            new_shot.shotController = GetComponent<ShotController>();
+            
+            new_shot.Init(shooter, 
+                GetComponent<ShotController>(),
+                game,string.Format("{0}-Shot{1}", 
+                shooter.name.Replace("layer",""), shotCounter++),
+                shooter.entityColor);
         }
         else {
             new_shot = magazine.Pop();
         }
 
         new_shot.transform.position = gameObject.transform.position;
-
+        
         Vector3 firing_dir = shooter.LastFacingDirVector();
+
+        if (isPoweredUp) {
+            new_shot.DoPowerUp();
+            firing_dir*=game.config.PowerupShotSpeedMultiplier;
+            isPoweredUp = false;
+            }
+
         firing_dir.y+=shotElevation;
         new_shot.gameObject.SetActive(true);
         new_shot.GetComponent<Rigidbody>().AddForce(firing_dir*shotSpeed, ForceMode.VelocityChange);

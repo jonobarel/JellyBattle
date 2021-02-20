@@ -26,12 +26,36 @@ public class Shot : Entity
     {
         GameObject collider = other.gameObject;
         Debug.Log(name + " collided with " + collider.name);
-        if (collider.CompareTag("Player") && collider.GetComponent<Player>() != Owner)
-        {
-            isPoweredUp = false;
-        } else if (collider.CompareTag("Void") || collider.CompareTag("Platform")) {
-            shotController.ReturnShot(gameObject.GetComponent<Shot>());
-
+        if (other.CompareTag("Player") && other.GetComponent<Player>() == Owner) {
+            return;
         }
+        
+        DoUnpower();
+        shotController.ReturnShot(GetComponent<Shot>());
+    }
+
+    /// <summary>
+    /// Initialise parameters for the Shot entity
+    /// </summary>
+    /// <param name="shooter"></param>
+    /// <param name="shotController"></param>
+    /// <param name="game"></param>
+    /// <param name="name"></param>
+    /// <param name="color"></param>
+    public void Init(Player shooter, ShotController gun,  GameController gameController, string str,Color col) {
+        Owner = shooter;
+        name = str;
+        game = gameController;
+        entityColor = col;
+        shotController = gun;
+    }
+    public void DoPowerUp() {
+        isPoweredUp = true;
+        transform.localScale=Vector3.one*game.config.PowerupSizeMultiplier;
+    }
+
+    public void DoUnpower() {
+        isPoweredUp = false;
+        transform.localScale=Vector3.one;
     }
 }

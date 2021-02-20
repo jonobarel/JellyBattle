@@ -47,7 +47,7 @@ public class Player : Entity
 
     public Color playerColor {
         get { return entityColor;}
-        set {entityColor = value; SetPlayerColor(value);}
+        set {entityColor = value;}
 
     }
 
@@ -167,33 +167,14 @@ public class Player : Entity
             game.PowerUpTaken();
             particleGun.isPoweredUp = true;
         }
-    }
-
-    private void SetPlayerColor(Color color)
-    {
-        //gunParticles.startColor = color;
-    }
-
-    /*private void OnParticleCollision(GameObject other)
-    {
-        Shooter shooter = other.GetComponent<Shooter>();
-
-        if (shooter.Owner == entity)
-        {
-            //Debug.Log(name + "shot self");
-        }
-        else if (!isDefending || shooter.isPoweredUp)
-        {
-            Debug.Log(shooter.Owner.name + "==>" + name);
-            game.PlayerHit(entity, shooter);
+        else if (
+            other.gameObject.CompareTag("Bullet") 
+            && other.GetComponent<Shot>().Owner != entity 
+            && (!isDefending || other.GetComponent<Shot>().isPoweredUp)
+            ) {
             Die();
         }
-        else
-        {
-            Debug.Log(name + " blocked!");
-        }
-
-    }*/
+    }
 
     /// <summary>
     /// Sets the firing direction for the particle cannon.
