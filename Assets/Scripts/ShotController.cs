@@ -23,41 +23,46 @@ public class ShotController : ColorFightersBase
 
     }
 
-    public void Fire() {
+    public void Fire()
+    {
         Shot new_shot;
-        if (magazine.Count == 0) { //out of bullets, need to create a new one.
+        if (magazine.Count == 0)
+        { //out of bullets, need to create a new one.
             new_shot = Instantiate(shotPrefab);
-            
-            new_shot.Init(shooter, 
+
+            new_shot.Init(shooter,
                 GetComponent<ShotController>(),
-                game,string.Format("{0}-Shot{1}", 
-                shooter.name.Replace("layer",""), shotCounter++),
+                game, string.Format("{0}-Shot{1}",
+                shooter.name.Replace("layer", ""), shotCounter++),
                 shooter.entityColor);
         }
-        else {
+        else
+        {
             new_shot = magazine.Pop();
         }
 
         new_shot.transform.position = gameObject.transform.position;
-        
+
         Vector3 firing_dir = shooter.LastFacingDirVector();
 
-        if (isPoweredUp) {
+        if (isPoweredUp)
+        {
             new_shot.DoPowerUp();
-            firing_dir*=game.config.PowerupShotSpeedMultiplier;
+            firing_dir *= game.config.PowerupShotSpeedMultiplier;
             isPoweredUp = false;
-            }
+        }
+        else { new_shot.PowerDown(); }
 
-        firing_dir.y+=shotElevation;
-        Debug.Log(shooter.name + " firing direction: " + firing_dir);
+        firing_dir.y += shotElevation;
         new_shot.gameObject.SetActive(true);
-        new_shot.GetComponent<Rigidbody>().AddForce(firing_dir*shotSpeed, ForceMode.VelocityChange);
+        new_shot.GetComponent<Rigidbody>().AddForce(firing_dir * shotSpeed, ForceMode.VelocityChange);
     }
-    public void ReturnShot(Shot shot) {
+    public void ReturnShot(Shot shot)
+    {
         shot.rigidBody.velocity = Vector3.zero;
         shot.gameObject.SetActive(false);
         magazine.Push(shot);
-        
+
 
     }
 }

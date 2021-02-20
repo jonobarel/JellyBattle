@@ -165,6 +165,9 @@ public class Player : Entity
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Bullet")){
+            Debug.Log(other.name + ": powered up " + other.GetComponent<Shot>().isPoweredUp);
+        }
         if (other.gameObject.CompareTag("Powerup"))
         {
             Debug.Log(name + " touched powerup");
@@ -178,6 +181,8 @@ public class Player : Entity
         {
             Die();
         }
+
+        
     }
 
     /// <summary>

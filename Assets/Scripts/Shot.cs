@@ -11,7 +11,7 @@ public class Shot : Entity
     new private ParticleSystem particleSystem;
     private ParticleSystem.MainModule gunParticles;
     public Rigidbody rigidBody;
-    
+    private float BaseBulletSize;
     
 
     public override void Awake()
@@ -20,18 +20,21 @@ public class Shot : Entity
         particleSystem = GetComponent<ParticleSystem>();
         gunParticles = particleSystem.main;
         rigidBody = GetComponent<Rigidbody>();
+        BaseBulletSize = transform.localScale.x;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         GameObject collider = other.gameObject;
-        Debug.Log(string.Format("{0} owned by {1} hit {2}", name,Owner, other.name ));
-        if (other.CompareTag("Player") && other.GetComponent<Player>() == Owner) {
-            return;
+        
+        if (other.CompareTag("Player") && other.GetComponent<Player>() == Owner.GetComponent<Player>()) {
+            Debug.Log("bullet hit owner");
+        }
+        else {
+            Debug.Log("Bullet hit: " + other.name);
+            shotController.ReturnShot(GetComponent<Shot>());
         }
         
-        DoUnpower();
-        shotController.ReturnShot(GetComponent<Shot>());
     }
 
     /// <summary>
@@ -51,11 +54,12 @@ public class Shot : Entity
     }
     public void DoPowerUp() {
         isPoweredUp = true;
-        transform.localScale*=game.config.PowerupSizeMultiplier;
+        transform.localScale=Vector3.one*BaseBulletSize*game.config.PowerupSizeMultiplier;
     }
 
-    public void DoUnpower() {
+    public void PowerDown() {
         isPoweredUp = false;
-        transform.localScale/=game.config.PowerupSizeMultiplier;
+        transform.localScale=Vector3.one*BaseBulletSize;
     }
+
 }
