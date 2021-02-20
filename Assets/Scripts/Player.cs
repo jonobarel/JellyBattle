@@ -18,18 +18,18 @@ public class Player : Entity
     private float shotCooldown;
 
     //member objects
-    private Renderer playerRenderer;
     private Rigidbody rigidBody;
+    private static readonly int SieldInactiveLayer = 9;
+    private static readonly int DefaultLayer = 0;
 
     //private Light playerLight;
-    [SerializeField] private Shooter particleGun;
+    [SerializeField] private ShotController particleGun;
     [SerializeField] private ParticleSystem.MainModule gunParticles;
     [SerializeField] private DebugText debugText;
 
     private Animator animator;
     private PlayerInput input;
 
-    new private Player entity;
     private bool isGrounded = false;
 
     private float movementX = 0;
@@ -47,25 +47,21 @@ public class Player : Entity
         get { return isDead; }
     }
 
-    public Color playerColor {
-        get { return entityColor;}
-        set {entityColor = value; SetPlayerColor(value);}
+    public Color playerColor
+    {
+        get { return entityColor; }
+        set { entityColor = value; }
 
     }
 
     private float nextShotWindow = 0f;
-
-
-
     private bool isPoweredUp = false;
 
     public override void Awake()
     {
         base.Awake();
-        playerRenderer = GetComponentInChildren<Renderer>();
-
-        particleGun = GetComponentInChildren<Shooter>();
-        gunParticles = particleGun.GetComponent<ParticleSystem>().main;
+        particleGun = GetComponentInChildren<ShotController>();
+        //gunParticles = particleGun.GetComponent<ParticleSystem>().main;
         animator = GetComponent<Animator>();
         entity = GetComponent<Player>();
         input = GetComponent<PlayerInput>();
@@ -79,6 +75,10 @@ public class Player : Entity
         Debug.Log(name + " initiated.");
     }
 
+    public Vector3 LastFacingDirVector()
+    {
+        return new Vector3(lastDirectionFacing, 0, 0);
+    }
     public void FixedUpdate()
     {
         debugText.force = movementX;
@@ -102,8 +102,8 @@ public class Player : Entity
         moveSpeed = config.PlayerMaxSpeed;
         shotCooldown = config.ShotCooldown;
         maxSpeed = config.PlayerMaxSpeed;
-        particleGun.SetParticleSpeed(config.BulletSpeed);
-        if (config.ShowDebugData)
+        //particleGun.SetParticleSpeed(config.BulletSpeed);
+        if (config.DebugMode)
         {
             debugText.gameObject.SetActive(true);
             if (name == "Player1")
@@ -165,38 +165,24 @@ public class Player : Entity
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Bullet")){
+            Debug.Log(other.name + ": powered up " + other.GetComponent<Shot>().isPoweredUp);
+        }
         if (other.gameObject.CompareTag("Powerup"))
         {
             Debug.Log(name + " touched powerup");
             game.PowerUpTaken();
             particleGun.isPoweredUp = true;
         }
-    }
-
-    private void SetPlayerColor(Color color)
-    {
-        gunParticles.startColor = color;
-    }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        Shooter shooter = other.GetComponent<Shooter>();
-
-        if (shooter.Owner == entity)
+        else if (
+                other.gameObject.CompareTag("Bullet")
+                && other.GetComponent<Shot>().Owner != entity
+                && (!isDefending || other.GetComponent<Shot>().isPoweredUp))
         {
-            //Debug.Log(name + "shot self");
-        }
-        else if (!isDefending || shooter.isPoweredUp)
-        {
-            Debug.Log(shooter.Owner.name + "==>" + name);
-            game.PlayerHit(entity, shooter);
             Die();
         }
-        else
-        {
-            Debug.Log(name + " blocked!");
-        }
 
+        
     }
 
     /// <summary>
@@ -215,7 +201,7 @@ public class Player : Entity
         if (!isDefending && Time.time > nextShotWindow)
         {
             //this COULD be moved to the particle cannon, I suppose?
-            particleGun.Shoot();
+            particleGun.Fire();
             nextShotWindow = Time.time + shotCooldown;
         }
 
@@ -225,15 +211,15 @@ public class Player : Entity
     {
         if (!input.isPressed) //isDefending is redundant, because of how keys work. But just in case. 
         { //stop defending
-            Debug.Log(name + ": Stop defending");
+            defenseShield.layer = SieldInactiveLayer;
             rigidBody.constraints ^= RigidbodyConstraints.FreezePositionX; //unlock horizontal position.
             isDefending = false;
         }
         else if (input.isPressed)
         {
             //enter defense mode
+            defenseShield.layer = DefaultLayer;
             isDefending = true;
-            Debug.Log(name + ": Defending");
             rigidBody.constraints |= RigidbodyConstraints.FreezePositionX; //lock horizontal position
         }
         animator.SetBool("Defending", isDefending);

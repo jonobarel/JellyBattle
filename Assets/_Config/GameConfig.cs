@@ -14,9 +14,10 @@ public class GameConfig : ScriptableObject
     public float GravityMultiplier = 1;
 
     [Header("Bullets")]
-    public float BulletSpeed = 20;
+    public float BulletSpeed = 12;
     public float ShotCooldown = 2;
     public Color deathColor;
+    public float ShotElevation = 0.2f;
     
     [Header("Powerup")]
     public float PowerupShotSpeedMultiplier = 3;
@@ -26,5 +27,6 @@ public class GameConfig : ScriptableObject
     public float PowerupSpawnInterval = 10;
 
     [Header("Developer options")]
-    public bool ShowDebugData;
+    public bool DebugMode;
+
 }

@@ -18,6 +18,11 @@ public abstract class Entity : ColorFightersBase
         particleSys = GetComponentInChildren<ParticleSystem>();
     }
 
+    public Entity Owner {
+        get {return entity;}
+        set {entity = value;}
+    }
+    
     public Color entityColor
     {
         get { return bodyRenderer.material.color; }

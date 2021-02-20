@@ -18,10 +18,11 @@ MonoBehaviour:
   PlayerJumpForce: 8
   PlayerAcceleration: 5
   GravityMultiplier: 0.9
-  BulletSpeed: 5
+  BulletSpeed: 20
   ShotCooldown: 1.5
   deathColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
-  PowerupShotSpeedMultiplier: 3
-  PowerupSizeMultiplier: 1.5
+  ShotElevation: 0.2
+  PowerupShotSpeedMultiplier: 1.25
+  PowerupSizeMultiplier: 2
   PowerupSpawnInterval: 5
-  ShowDebugData: 0
+  DebugMode: 1

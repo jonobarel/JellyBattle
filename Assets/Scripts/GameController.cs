@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour
     public void PowerUpTaken() {
         arena.PowerUpTaken();
     }
-    public void PlayerHit(Player target, Shooter shooter) {
+    public void PlayerHit(Player target, Player shooter) {
 
     }
 

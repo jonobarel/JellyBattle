@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MenuMatch : MenuBase
 {
+    
     public void SetColor(GameObject thisButton) {
         players = game.players;
         Button button = thisButton.GetComponent<Button>();
