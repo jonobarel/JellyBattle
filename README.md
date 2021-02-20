@@ -25,10 +25,9 @@ Jump | W | Up arrow key
 Defend | S | Down arrow key
 Shoot | Left CTRL | Right CTRL
 
-Known issues:
+## Known issues:
 
 * Some clipping issues with shots going through platforms
 * Clipping issues in jelly bubble skins with platform
 * Mismatch between Editor and Windows Build output causes particle system to detach from bullets
 * Windows Build colliders in bullets and players aren't aligned
-*  
