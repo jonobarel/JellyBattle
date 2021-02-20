@@ -31,7 +31,6 @@ public class Shot : Entity
             return;
         }
         else {
-            Debug.Log("Bullet hit: " + other.name + " poweredup: " + isPoweredUp);
             shotController.ReturnShot(GetComponent<Shot>());
         }
         
@@ -39,13 +38,15 @@ public class Shot : Entity
 
     public void Fire(Vector3 firing_dir, bool powered) {
         float size_factor = BaseBulletSize*(powered ? game.config.PowerupSizeMultiplier : 1f);
-        Debug.LogFormat(String.Format("bullet size: {0}, powered up {1}",size_factor, powered));
-        float powereup_speed_factor = game.config.BulletSpeed*(powered ?  game.config.PowerupShotSpeedMultiplier : 1f);
+        float powereup_speed_factor = powered ?  game.config.PowerupShotSpeedMultiplier : 1f;
+
+        particleSys.Play();
 
         isPoweredUp = powered;
-        transform.localScale = Vector3.one*size_factor;
         firing_dir.x*=powereup_speed_factor;
-        GetComponent<Rigidbody>().AddForce(firing_dir, ForceMode.VelocityChange);
+        transform.localScale = Vector3.one*size_factor;
+       
+        GetComponent<Rigidbody>().AddForce(firing_dir*game.config.BulletSpeed, ForceMode.VelocityChange);
 
     }
     /// <summary>

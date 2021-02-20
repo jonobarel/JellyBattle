@@ -44,8 +44,9 @@ public class ShotController : ColorFightersBase
         new_shot.transform.position = gameObject.transform.position;
 
         Vector3 firing_dir = shooter.LastFacingDirVector();
-        
+
         firing_dir.y += shotElevation;
+        Debug.Log("Firing direction: " + firing_dir);
         new_shot.gameObject.SetActive(true);
         new_shot.Fire(firing_dir, isPoweredUp);
         isPoweredUp = false;

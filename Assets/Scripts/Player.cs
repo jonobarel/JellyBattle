@@ -72,7 +72,7 @@ public class Player : Entity
         InitConfigVars(game.config);
         rigidBody = GetComponent<Rigidbody>();
 
-        Debug.Log(name + " initiated.");
+        //Debug.Log(name + " initiated.");
     }
 
     public Vector3 LastFacingDirVector()
