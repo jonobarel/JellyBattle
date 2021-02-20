@@ -44,18 +44,11 @@ public class ShotController : ColorFightersBase
         new_shot.transform.position = gameObject.transform.position;
 
         Vector3 firing_dir = shooter.LastFacingDirVector();
-
-        if (isPoweredUp)
-        {
-            new_shot.DoPowerUp();
-            firing_dir *= game.config.PowerupShotSpeedMultiplier;
-            isPoweredUp = false;
-        }
-        else { new_shot.PowerDown(); }
-
+        
         firing_dir.y += shotElevation;
         new_shot.gameObject.SetActive(true);
-        new_shot.GetComponent<Rigidbody>().AddForce(firing_dir * shotSpeed, ForceMode.VelocityChange);
+        new_shot.Fire(firing_dir, isPoweredUp);
+        isPoweredUp = false;
     }
     public void ReturnShot(Shot shot)
     {
