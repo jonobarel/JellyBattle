@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class ArenaController : ColorFightersBase
 {
-    public GameObject powerUpSpawnPoints;
-    public PowerUp powerUpPrefab;
+    /// <summary>
+    /// Controller class for the Arena. This can be replicated and attached for alternative Arena layouts.
+    /// </summary>
 
+    /// <summary>
+    /// Prefab object for the Powerup to be spawned.
+    /// </summary>    
+    public PowerUp powerUpPrefab;
 
     private float powerUpSpawnInterval;
     private float lastPickupTime = 0f;
     private Vector3[] spawnPoints;
     private PowerUp pup;
     private bool isPowerUpAvailable;
-
     private float SpawnPointVerticalOffset = 1f;
-
 
     void Start()
     {
@@ -26,10 +29,13 @@ public class ArenaController : ColorFightersBase
         pup.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// update is currently used only to decide whether to spawn a powerup.
+    /// Could have been replaced with a timer, that triggers at a random time within a window around the interval.
+    /// </summary>
     void FixedUpdate()
     {
-        //Debug.Log("time since powerup spawn: " + Mathf.Round(Time.time - lastPickupTime));
+        
         if(!isPowerUpAvailable) {
             float t = Time.time - lastPickupTime;
             if (t > powerUpSpawnInterval) {
