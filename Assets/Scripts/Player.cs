@@ -5,6 +5,7 @@ public class Player : Entity
 {
     public const int FaceLeft = -1;
     public const int FaceRight = 1;
+    public const float DefenseDownForce = 10f;
 
     [Header("Gameplay Variables")]
     [SerializeField] private float jumpForce;
@@ -102,7 +103,7 @@ public class Player : Entity
         moveSpeed = config.PlayerMaxSpeed;
         shotCooldown = config.ShotCooldown;
         maxSpeed = config.PlayerMaxSpeed;
-        //particleGun.SetParticleSpeed(config.BulletSpeed);
+
         if (config.DebugMode)
         {
             debugText.gameObject.SetActive(true);
@@ -213,6 +214,7 @@ public class Player : Entity
         { //stop defending
             defenseShield.layer = SieldInactiveLayer;
             rigidBody.constraints ^= RigidbodyConstraints.FreezePositionX; //unlock horizontal position.
+            
             isDefending = false;
         }
         else if (input.isPressed)
@@ -221,6 +223,7 @@ public class Player : Entity
             defenseShield.layer = DefaultLayer;
             isDefending = true;
             rigidBody.constraints |= RigidbodyConstraints.FreezePositionX; //lock horizontal position
+            rigidBody.AddForce(Vector3.down*DefenseDownForce, ForceMode.Impulse);
         }
         animator.SetBool("Defending", isDefending);
     }
@@ -244,7 +247,7 @@ public class Player : Entity
         bodyLight.enabled = false;
 
         input.enabled = false;
-        rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        rigidBody.constraints|= RigidbodyConstraints.FreezePositionX;
 
         animator.SetBool("Dead", isDead);
 
