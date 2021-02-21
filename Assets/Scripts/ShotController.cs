@@ -5,20 +5,16 @@ using UnityEngine;
 public class ShotController : ColorFightersBase
 {
     private Stack<Shot> magazine;
-    private float shotCooldown;
     public Shot shotPrefab;
-    [SerializeField] private float shotSpeed;
+
     public bool isPoweredUp;
     private Player shooter;
     private int shotCounter = 0;
-    [SerializeField] private float shotElevation = 0.5f;
+
     void Start()
     {
         shooter = GetComponentInParent<Player>();
         game = shooter.game;
-        shotCooldown = game.config.ShotCooldown;
-        shotSpeed = game.config.BulletSpeed;
-        shotElevation = game.config.ShotElevation;
         magazine = new Stack<Shot>(4);
 
     }
@@ -45,7 +41,7 @@ public class ShotController : ColorFightersBase
 
         Vector3 firing_dir = shooter.LastFacingDirVector();
 
-        firing_dir.y += shotElevation;
+        firing_dir.y += game.config.ShotElevation;
         Debug.Log("Firing direction: " + firing_dir);
         new_shot.gameObject.SetActive(true);
         new_shot.Fire(firing_dir, isPoweredUp);
