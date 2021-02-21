@@ -8,15 +8,15 @@ public class Player : Entity
     public const float DefenseDownForce = 10f;
 
     [Header("Gameplay Variables")]
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float gravityMultiplier;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float maxSpeed;
+    
+    
+    
+    
     [SerializeField] private GameObject defenseShield;
-    [SerializeField] private ParticleSystem powerup;
-    private RigidbodyConstraints defaultConstraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
+    
 
     private float shotCooldown;
+    private bool toJump = false;
 
     //member objects
     private Rigidbody rigidBody;
@@ -85,25 +85,23 @@ public class Player : Entity
         debugText.force = movementX;
         debugText.velocity = rigidBody.velocity.x;
 
-        rigidBody.AddForce(new Vector3(movementX * moveSpeed, 0f, 0f));
+        rigidBody.AddForce(new Vector3(movementX * game.config.PlayerAcceleration * Time.fixedDeltaTime, 0f, 0f), ForceMode.Impulse);
 
 
         Vector3 new_vel = rigidBody.velocity;
-        new_vel.x = Mathf.Clamp(new_vel.x, -maxSpeed, maxSpeed);
+        new_vel.x = Mathf.Clamp(new_vel.x, -game.config.PlayerMaxSpeed, game.config.PlayerMaxSpeed);
 
         rigidBody.velocity = new_vel;
 
         SetFacing(lastDirectionFacing); //adjust the direction of the particle cannon based on last movement
+        if (toJump) {
+            rigidBody.AddForce(Vector3.up * game.config.PlayerJumpForce / game.config.GravityMultiplier, ForceMode.VelocityChange);
+            toJump = false;
+        }
     }
 
     private void InitConfigVars(GameConfig config)
     {
-        jumpForce = config.PlayerJumpForce;
-        gravityMultiplier = config.GravityMultiplier;
-        moveSpeed = config.PlayerMaxSpeed;
-        shotCooldown = config.ShotCooldown;
-        maxSpeed = config.PlayerMaxSpeed;
-
         if (config.DebugMode)
         {
             debugText.gameObject.SetActive(true);
@@ -117,13 +115,12 @@ public class Player : Entity
             }
         }
 
-        //particleGun.GetComponent<ParticleSystem>().main.startSpeed = config.BulletSpeed;
     }
     public void OnJump(InputValue jumpValue)
     {
         if (isGrounded)
         {
-            rigidBody.AddForce(Vector3.up * jumpForce / gravityMultiplier, ForceMode.VelocityChange);
+            toJump = true;
             isGrounded = false;
 
         }
@@ -199,7 +196,7 @@ public class Player : Entity
         {
             //this COULD be moved to the particle cannon, I suppose?
             particleGun.Fire();
-            nextShotWindow = Time.time + shotCooldown;
+            nextShotWindow = Time.time + game.config.ShotCooldown;
         }
 
     }
