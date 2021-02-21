@@ -12,7 +12,9 @@ public class Shot : Entity
     private ParticleSystem.MainModule gunParticles;
     public Rigidbody rigidBody;
     private float BaseBulletSize;
-    
+    private Vector3 trajectory;
+    private bool toFire = false;
+   
 
     public override void Awake()
     {
@@ -34,19 +36,29 @@ public class Shot : Entity
         }
     }
 
-    public void Fire(Vector3 firing_dir, bool powered) {
-        float size_factor = BaseBulletSize*(powered ? game.config.PowerupSizeMultiplier : 1f);
-        float powereup_speed_factor = powered ?  game.config.PowerupShotSpeedMultiplier : 1f;
-
-        particleSys.Play();
-
+    public void Fire(Vector3 firing_dir, bool powered){
         isPoweredUp = powered;
-        firing_dir.x*=powereup_speed_factor;
+        float size_factor = BaseBulletSize*(isPoweredUp ? game.config.PowerupSizeMultiplier : 1f);
+        float powerup_speed_factor = isPoweredUp ?  game.config.PowerupShotSpeedMultiplier : 1f;
+        trajectory = firing_dir;
+        trajectory.x*=powerup_speed_factor;
         transform.localScale = Vector3.one*size_factor;
-       
-        GetComponent<Rigidbody>().AddForce(firing_dir*game.config.BulletSpeed, ForceMode.VelocityChange);
-
+        toFire = true;
     }
+    
+    private void FixedUpdate() {
+        if (toFire) {
+            FireFixedUpdate();
+            toFire = false;
+        }
+    }
+    
+    public void FireFixedUpdate() {
+        particleSys.Play();
+        Debug.Log(trajectory + ", " + game.config.BulletSpeed);
+        rigidBody.AddForce(trajectory*game.config.BulletSpeed, ForceMode.VelocityChange);
+    }
+
     /// <summary>
     /// Initialise parameters for the Shot entity
     /// </summary>
