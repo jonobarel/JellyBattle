@@ -16,7 +16,7 @@ MonoBehaviour:
   Player2DefaultColor: {r: 0.9490196, g: 0.8476171, b: 0.02745096, a: 1}
   PlayerMaxSpeed: 5
   PlayerJumpForce: 8
-  PlayerAcceleration: 5
+  PlayerAcceleration: 50
   GravityMultiplier: 0.9
   BulletSpeed: 20
   ShotCooldown: 1.5
