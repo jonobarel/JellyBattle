@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class used for managing all aspects of gameplay
@@ -31,8 +32,7 @@ public class GameController : MonoBehaviour
     private Player player1;
     private Player player2;
 
-    void Start()
-    {
+    void Start() {
         gameController = GetComponent<GameController>();
         players = new List<Player>(2);
         Color player1Color = config.Player1DefaultColor;
@@ -43,7 +43,6 @@ public class GameController : MonoBehaviour
 
         // Spawn player 2
         AddPlayer("Player2", player2Spawn, player2Color, Player.FaceLeft);
-
     }
 
     /// <summary>
@@ -52,8 +51,7 @@ public class GameController : MonoBehaviour
     /// <param name="name">name assigned to Player object</param>
     /// <param name="spawnPoint">Player spawn point</param>
     /// <param name="color">Color override for player skin</param>
-    protected void AddPlayer(string name, Transform spawnPoint, Color color, int facingDirection)
-    {
+    protected void AddPlayer(string name, Transform spawnPoint, Color color, int facingDirection) {
         Player p = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
         p.game = gameController;
         p.name = name;
@@ -63,7 +61,7 @@ public class GameController : MonoBehaviour
         p.GetComponent<PlayerInput>().SwitchCurrentControlScheme(name);
         p.GetComponent<PlayerInput>().DeactivateInput();
         players.Add(p);
-        
+
     }
     //public void StartMatch() {
     //    players.ForEach(delegate (Player p) {
@@ -79,6 +77,11 @@ public class GameController : MonoBehaviour
     }
 
     public void Victory(string name) {
+        players.ForEach(delegate (Player p) {
+            p.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+            p.GetComponent<PlayerInput>().DeactivateInput();
+        });
+
         CanvasGroup menuMain = MenuScreen.GetComponent<CanvasGroup>();
         menuMain.alpha = Mathf.Lerp(0f, 1f, 1f);
         menuMain.blocksRaycasts = true;
@@ -86,6 +89,10 @@ public class GameController : MonoBehaviour
         CanvasGroup menuVictory = MenuScreen.transform.Find("MenuVictory").GetComponent<CanvasGroup>();
         menuVictory.alpha = Mathf.Lerp(0f, 1f, 1f);
         menuVictory.blocksRaycasts = true;
+
+        Text victoryLabel = MenuScreen.transform.Find("MenuVictory").GetComponentInChildren<Text>();
+
+        victoryLabel.text = name + " is the winner!";
     }
 
 }
