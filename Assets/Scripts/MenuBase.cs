@@ -11,7 +11,7 @@ public class MenuBase : ColorFightersBase
     [SerializeField] protected List<Player> players;
 
     public void Awake() {
-        config = game.config;
+        //config = game.config;
     }
     public void HideMenu(Canvas screen) {
         CanvasGroup menu = screen.GetComponent<CanvasGroup>();

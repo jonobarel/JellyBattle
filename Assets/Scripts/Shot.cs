@@ -55,7 +55,7 @@ public class Shot : Entity
     
     public void FireFixedUpdate() {
         particleSys.Play();
-        Debug.Log(trajectory + ", " + game.config.BulletSpeed);
+        //Debug.Log(trajectory + ", " + game.config.BulletSpeed);
         rigidBody.AddForce(trajectory*game.config.BulletSpeed, ForceMode.VelocityChange);
     }
 

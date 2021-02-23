@@ -243,7 +243,7 @@ public class Player : Entity
         rigidBody.constraints|= RigidbodyConstraints.FreezePositionX;
 
         animator.SetBool("Dead", isDead);
-
+        game.Victory(name);
     }
 
 }

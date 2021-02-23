@@ -9,6 +9,7 @@ public abstract class Entity : ColorFightersBase
     protected Renderer bodyRenderer;
     protected Light bodyLight;
     protected ParticleSystem particleSys;
+    protected ParticleSystem.MainModule particleColor;
 
     public virtual void Awake()
     {
@@ -16,6 +17,7 @@ public abstract class Entity : ColorFightersBase
         entity = GetComponent<Entity>();
         bodyRenderer = GetComponentInChildren<Renderer>();
         particleSys = GetComponentInChildren<ParticleSystem>();
+        particleColor = GetComponentInChildren<ParticleSystem>().main;
     }
 
     public Entity Owner {
@@ -37,6 +39,6 @@ public abstract class Entity : ColorFightersBase
         bodyRenderer.material.SetColor("_Color", color);
         bodyRenderer.material.SetColor("_EmissionColor", color);
         bodyLight.color = color;
-        particleSys.startColor = color;
+        particleColor.startColor = color;
     }
 }

@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
 
     [Header("General Settings")]
     public GameConfig config;
+    public GameObject MenuScreen;
 
     [SerializeField] protected Player playerPrefab;
 
@@ -75,6 +76,16 @@ public class GameController : MonoBehaviour
     }
     public void PlayerHit(Player target, Player shooter) {
 
+    }
+
+    public void Victory(string name) {
+        CanvasGroup menuMain = MenuScreen.GetComponent<CanvasGroup>();
+        menuMain.alpha = Mathf.Lerp(0f, 1f, 1f);
+        menuMain.blocksRaycasts = true;
+
+        CanvasGroup menuVictory = MenuScreen.transform.Find("MenuVictory").GetComponent<CanvasGroup>();
+        menuVictory.alpha = Mathf.Lerp(0f, 1f, 1f);
+        menuVictory.blocksRaycasts = true;
     }
 
 }
