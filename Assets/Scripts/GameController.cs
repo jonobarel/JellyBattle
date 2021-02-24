@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour
 
         Text victoryLabel = MenuScreen.transform.Find("MenuVictory").GetComponentInChildren<Text>();
 
-        victoryLabel.text = name + " is the winner!";
+        victoryLabel.text = name + " defeated!";
     }
 
 }

@@ -4888,7 +4888,7 @@ MonoBehaviour:
   arena: {fileID: 1073680904}
   config: {fileID: 11400000, guid: ef1baf1dab9c86d48bd2abd3c4e6d369, type: 2}
   MenuScreen: {fileID: 2409210979735141022}
-  playerPrefab: {fileID: 2618305756907022670, guid: 7e649a7503645e547a18c93ac0154e92,
+  playerPrefab: {fileID: 2618305756907022670, guid: c795112c9d9044443b2b24d5fcdd0dbc,
     type: 3}
   player1Spawn: {fileID: 444605487}
   player2Spawn: {fileID: 1683089461}
