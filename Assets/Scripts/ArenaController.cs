@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArenaController : ColorFightersBase
-{
     /// <summary>
     /// Controller class for the Arena. This can be replicated and attached for alternative Arena layouts.
+    /// Handles spawning of Powerups.
     /// </summary>
+public class ArenaController : ColorFightersBase
+{
+
 
     /// <summary>
     /// Prefab object for the Powerup to be spawned.
@@ -18,7 +20,7 @@ public class ArenaController : ColorFightersBase
     private Vector3[] spawnPoints;
     private PowerUp pup;
     private bool isPowerUpAvailable;
-    private float SpawnPointVerticalOffset = 1f;
+    private float SpawnPointVerticalOffset = 1f; //how far above the platforms the powerup should be spawned
 
     void Start()
     {
@@ -36,20 +38,23 @@ public class ArenaController : ColorFightersBase
     void FixedUpdate()
     {
         
-        if(!isPowerUpAvailable) {
+        if(!isPowerUpAvailable) { 
             float t = Time.time - lastPickupTime;
             if (t > powerUpSpawnInterval) {
                 SpawnPowerup();
             }
         }
-
     }
 
+    /// <summary>
+    /// When the powerup is taken, the graphic should be hidden and time starts counting.
+    /// </summary>
     public void PowerUpTaken() {
         isPowerUpAvailable = false;
         pup.gameObject.SetActive(false);
         lastPickupTime = Time.time;
     }
+    
     private void SpawnPowerup()
     {
         int rand = Random.Range(0, spawnPoints.Length);

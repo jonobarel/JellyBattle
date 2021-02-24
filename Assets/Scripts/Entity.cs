@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+    /// <summary>
+    /// Base class for player-controlled objects in the game, to maintain a single consistent look.
+    /// This is the template for the Jelly-type objects, so the player and the bullets have the same structure and behaviour.
+    /// </summary>
 public abstract class Entity : ColorFightersBase
 
 {
+
     protected Entity entity;
     protected Renderer bodyRenderer;
     protected Light bodyLight;

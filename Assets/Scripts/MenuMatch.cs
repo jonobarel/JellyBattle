@@ -5,8 +5,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+    /// <summary>
+    /// Menu class for starting a match - color choice and game start
+    /// </summary>
 public class MenuMatch : MenuBase
 {    
+
+    
+    /// <summary>
+    /// used to set the color for the player based on the button clicked
+    /// </summary>
+    /// <param name="thisButton">Color to assign to the player</param>
     public void SetColor(GameObject thisButton) {
         players = game.players;
         Button button = thisButton.GetComponent<Button>();

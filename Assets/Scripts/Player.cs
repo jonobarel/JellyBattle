@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Class for managing player actions -- movements and shooting.
+/// </summary>
 public class Player : Entity
 {
     public const int FaceLeft = -1;
@@ -13,9 +16,7 @@ public class Player : Entity
     
     
     [SerializeField] private GameObject defenseShield;
-    
 
-    private float shotCooldown;
     private bool toJump = false;
 
     //member objects
@@ -23,7 +24,6 @@ public class Player : Entity
     private static readonly int SieldInactiveLayer = 9;
     private static readonly int DefaultLayer = 0;
 
-    //private Light playerLight;
     [SerializeField] private ShotController particleGun;
     [SerializeField] private ParticleSystem.MainModule gunParticles;
     [SerializeField] private DebugText debugText;
@@ -62,7 +62,6 @@ public class Player : Entity
     {
         base.Awake();
         particleGun = GetComponentInChildren<ShotController>();
-        //gunParticles = particleGun.GetComponent<ParticleSystem>().main;
         animator = GetComponent<Animator>();
         entity = GetComponent<Player>();
         input = GetComponent<PlayerInput>();
@@ -76,18 +75,23 @@ public class Player : Entity
         //Debug.Log(name + " initiated.");
     }
 
+    /// <summary>
+    /// Returns a vector representing the player's last "facing" direction, based on movement. This is sued primarily for shooting.
+    /// </summary>
+    /// <returns>a Vector3 object representing the direction in which the player last moved.</returns>
     public Vector3 LastFacingDirVector()
     {
         return new Vector3(lastDirectionFacing, 0, 0);
     }
     public void FixedUpdate()
     {
-        debugText.force = movementX;
-        debugText.velocity = rigidBody.velocity.x;
+        //debugText.force = movementX;
+        //debugText.velocity = rigidBody.velocity.x;
 
+        //move player based on movementX value.
         rigidBody.AddForce(new Vector3(movementX * game.config.PlayerAcceleration * Time.fixedDeltaTime, 0f, 0f), ForceMode.Impulse);
 
-
+        //cap the movement speed at PlayerMaxSpeed
         Vector3 new_vel = rigidBody.velocity;
         new_vel.x = Mathf.Clamp(new_vel.x, -game.config.PlayerMaxSpeed, game.config.PlayerMaxSpeed);
 
@@ -116,6 +120,8 @@ public class Player : Entity
         }
 
     }
+
+    //handle jump input
     public void OnJump(InputValue jumpValue)
     {
         if (isGrounded)
@@ -126,6 +132,7 @@ public class Player : Entity
         }
     }
 
+    //handle movement input
     public void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
@@ -203,7 +210,7 @@ public class Player : Entity
 
     public void OnDefend(InputValue input)
     {
-        if (!input.isPressed) //isDefending is redundant, because of how keys work. But just in case. 
+        if (!input.isPressed) 
         { //stop defending
             defenseShield.layer = SieldInactiveLayer;
             rigidBody.constraints ^= RigidbodyConstraints.FreezePositionX; //unlock horizontal position.
@@ -220,18 +227,7 @@ public class Player : Entity
         }
         animator.SetBool("Defending", isDefending);
     }
-    private void PlayerDefend()
-    {
-        //TODO: implement me
-        //transform.GetChild(3).gameObject.SetActive(true);
-    }
-
-    private void PlayerStopDefending()
-    {
-        //TODO: implement me.
-        //transform.GetChild(3).gameObject.SetActive(false);
-    }
-
+   
     private void Die()
     {
 
@@ -243,7 +239,7 @@ public class Player : Entity
         rigidBody.constraints|= RigidbodyConstraints.FreezePositionX;
 
         animator.SetBool("Dead", isDead);
-        game.Victory(name);
+        game.Victory(name); //notify gameController that the palyer has died.
     }
 
 }

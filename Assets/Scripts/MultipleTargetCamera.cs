@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
+/// <summary>
+/// Class for a camera that zooms in and out to accommodate both players in view
+/// </summary>
 public class MultipleTargetCamera : ColorFightersBase
 {
     [Header("Follow Settings")]

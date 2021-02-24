@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /// <summary>
-/// Class used for managing all aspects of gameplay
+/// Class used for managing all aspects of gameplay: spawning players, triggering menus on victory.
+/// In future iterations this class would be extended to support additional game modes.
 /// </summary>
 
 public class GameController : MonoBehaviour

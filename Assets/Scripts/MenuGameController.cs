@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+    /// <summary>
+    /// derived class for a GameController to run during the main menu.
+    /// </summary>
 public class MenuGameController : GameController
 {
+
     void Start() {
         gameController = GetComponent<GameController>();
         players = new List<Player>(2);

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Class that handles bullets -- initiating, storing, and firing them.
+/// </summary>
 public class ShotController : ColorFightersBase
 {
+    // bullets are stored in a stack, instantiated on demand, stored when they hit, and retrieved when needed
     private Stack<Shot> magazine;
     public Shot shotPrefab;
 
@@ -47,6 +50,11 @@ public class ShotController : ColorFightersBase
         new_shot.Fire(firing_dir, isPoweredUp);
         isPoweredUp = false;
     }
+
+    /// <summary>
+    /// Returns a bullet to the magazine after it has hit, by stopping it, deactivating it and reinserting into the Stack.
+    /// </summary>
+    /// <param name="shot">a Shot (bullet) object to be stored.</param>
     public void ReturnShot(Shot shot)
     {
         shot.gameObject.SetActive(false);

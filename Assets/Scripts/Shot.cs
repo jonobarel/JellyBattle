@@ -62,11 +62,11 @@ public class Shot : Entity
     /// <summary>
     /// Initialise parameters for the Shot entity
     /// </summary>
-    /// <param name="shooter"></param>
-    /// <param name="shotController"></param>
-    /// <param name="game"></param>
-    /// <param name="name"></param>
-    /// <param name="color"></param>
+    /// <param name="shooter">Player who fired the shot</param>
+    /// <param name="shotController">gun that fired the shot</param>
+    /// <param name="game">gameController object</param>
+    /// <param name="name">name to assign to the Shot (used for tracking bullets while debugging in hierarchy)</param>
+    /// <param name="color">color to assign to the bullet (should typically be the same as the player)</param>
     public void Init(Player shooter, ShotController gun,  GameController gameController, string str,Color col) {
         Owner = shooter;
         name = str;

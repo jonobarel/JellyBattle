@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+    /// <summary>
+    /// debugging class created for showing on screen data about the players.
+    /// </summary>
 public class DebugText : MonoBehaviour
 {
 
