@@ -33,4 +33,4 @@ Shoot | Left CTRL | Right CTRL
 * Some clipping issues with shots going through platforms
 * Sometimes, shots clip through jellies instead of hitting
 * Clipping issues in jelly bubble skins with platform
-* Shots behave correctly in Editor and WebGL, but issues with bullets in Windows Build
+* Shots behave correctly in Editor and WebGL, but issues are known with bullets in Windows Build
