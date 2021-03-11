@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/InputSystem.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/_Config/InputSystem.inputactions'
 
 using System;
 using System.Collections;
@@ -55,7 +55,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4ba46331-435c-41b1-96ce-73d29114fa24"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Player1"",
@@ -66,7 +66,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f58ba43e-cde0-4e2e-9c53-cb7ca0a51306"",
-                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""path"": ""<Keyboard>/rightShift"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Player2"",
